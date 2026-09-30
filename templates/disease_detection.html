@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Disease Detection{% endblock %}
+{% block page_title %}Crop Disease Detection Interface{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-virus-slash"></i>
+    <span><strong>Disease Detection Shell:</strong> Model backend placeholder ready for <code>models/disease_model.pkl</code>.</span>
+</div>
+
+<div class="grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Crop Leaf Image</h2>
+        </div>
+        <form action="{{ url_for('disease_detection') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="leaf_image" class="form-label">Select Leaf Image File (.jpg, .png)</label>
+                <input type="file" id="leaf_image" name="leaf_image" class="form-control" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fa-solid fa-microscope"></i> Analyze Leaf Health
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-square-check"></i> Diagnostic Status</h2>
+            <span class="badge badge-warning">Model Status</span>
+        </div>
+
+        <div style="text-align: center; padding: 2rem 1rem; color: var(--text-muted);">
+            <i class="fa-solid fa-shield-cat" style="font-size: 3rem; color: var(--accent-amber); margin-bottom: 1rem;"></i>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+                Disease detection model is not currently configured.
+            </h3>
+            <p style="font-size: 0.85rem;">
+                The backend model slot (<code>models/disease_model.pkl</code>) will be loaded in future ML implementation phases. No fake diagnosis is generated.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

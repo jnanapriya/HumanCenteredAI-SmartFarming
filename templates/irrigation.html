@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Irrigation Advisory{% endblock %}
+{% block page_title %}Irrigation & Water Management{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-droplet"></i>
+    <span><strong>Irrigation Module:</strong> Monitors soil moisture thresholds, ambient humidity, and rainfall forecasts to optimize water usage.</span>
+</div>
+
+<div class="grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-faucet-drip"></i> Field Conditions Input</h2>
+        </div>
+        <form action="{{ url_for('irrigation') }}" method="POST">
+            <div class="form-group">
+                <label for="crop" class="form-label">Current Crop</label>
+                <input type="text" id="crop" name="crop" class="form-control" value="Rice">
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="moisture" class="form-label">Soil Moisture (%)</label>
+                    <input type="number" id="moisture" name="moisture" class="form-control" value="45">
+                </div>
+                <div class="form-group">
+                    <label for="rainfall" class="form-label">Recent Rainfall (mm)</label>
+                    <input type="number" id="rainfall" name="rainfall" class="form-control" value="200">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fa-solid fa-water"></i> Assess Irrigation Need
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-gauge-high"></i> Irrigation Status</h2>
+            <span class="badge badge-success">Optimal Moisture</span>
+        </div>
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--primary-dark); margin: 0.5rem 0;">
+            No Irrigation Needed Today
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+            <strong>Reasoning:</strong> Soil moisture is at 45% with recent rainfall exceeding threshold. Delaying irrigation saves water resources.
+        </p>
+        <div style="margin-top: 1rem; padding: 0.75rem; background-color: var(--bg-hover); border-radius: var(--radius-sm); font-size: 0.85rem;">
+            <i class="fa-solid fa-seedling" style="color: var(--primary-main);"></i> <strong>Water Saving Tip:</strong> Next moisture check recommended in 48 hours.
+        </div>
+    </div>
+</div>
+{% endblock %}

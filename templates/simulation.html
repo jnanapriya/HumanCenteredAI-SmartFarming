@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}What-If Simulation{% endblock %}
+{% block page_title %}What-If Scenario Simulation Engine{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-sliders"></i>
+    <span><strong>Simulation Engine:</strong> Test "What-If" environmental variations (e.g. increase rainfall, change fertilizer) to estimate impact on crop suitability.</span>
+</div>
+
+<div class="grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-vial-circle-check"></i> Scenario Parameters</h2>
+        </div>
+        <form action="{{ url_for('simulation') }}" method="POST">
+            <div class="form-group">
+                <label for="scenario" class="form-label">Select Simulation Scenario</label>
+                <select id="scenario" name="scenario" class="form-control">
+                    <option value="rain_increase">+ 25% Rainfall Increase (Monsoon Surge)</option>
+                    <option value="rain_decrease">- 30% Rainfall Decrease (Drought Condition)</option>
+                    <option value="temp_increase">+ 3°C Temperature Elevation (Heatwave)</option>
+                    <option value="fert_increase">+ 20% Nitrogen Fertilizer Boost</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fa-solid fa-play"></i> Run What-If Simulation
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-chart-line"></i> Simulated Impact Assessment</h2>
+            <span class="badge badge-info">Model Estimated</span>
+        </div>
+        <div style="background-color: var(--bg-hover); padding: 1.25rem; border-radius: var(--radius-md);">
+            <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted);">Current Condition &rarr; Changed Condition</div>
+            <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary-dark); margin: 0.5rem 0;">
+                Rainfall 200mm &rarr; 250mm (+25%)
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-main);">
+                <strong>Simulated Effect:</strong> Rice suitability confidence increases from <strong>92% to 96%</strong>. High soil moisture retention expected.
+            </div>
+        </div>
+        <div style="font-size: 0.775rem; color: var(--text-muted); margin-top: 0.75rem;">
+            * Note: Simulation outcomes are predictive model estimations intended for scenario planning.
+        </div>
+    </div>
+</div>
+{% endblock %}

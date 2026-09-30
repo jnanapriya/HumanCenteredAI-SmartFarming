@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Yield Prediction{% endblock %}
+{% block page_title %}Harvest Yield Estimation{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-wheat-awn"></i>
+    <span><strong>Yield Prediction Module:</strong> Estimates expected crop yield per acre based on soil features, historical weather, and farm size.</span>
+</div>
+
+<div class="grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-calculator"></i> Crop & Land Parameters</h2>
+        </div>
+        <form action="{{ url_for('yield_prediction') }}" method="POST">
+            <div class="form-group">
+                <label for="crop" class="form-label">Crop Type</label>
+                <select id="crop" name="crop" class="form-control">
+                    <option value="Rice">Rice (Paddy)</option>
+                    <option value="Maize">Maize</option>
+                    <option value="Cotton">Cotton</option>
+                </select>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="area" class="form-label">Area (Acres)</label>
+                    <input type="number" step="0.1" id="area" name="area" class="form-control" value="2.5">
+                </div>
+                <div class="form-group">
+                    <label for="rainfall" class="form-label">Average Season Rainfall (mm)</label>
+                    <input type="number" id="rainfall" name="rainfall" class="form-control" value="202">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fa-solid fa-chart-pie"></i> Calculate Estimated Yield
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-scale-balanced"></i> Estimated Yield Output</h2>
+            <span class="badge badge-warning">UI Preview Mode</span>
+        </div>
+        <div style="background-color: var(--primary-soft); padding: 1.25rem; border-radius: var(--radius-md); text-align: center;">
+            <div style="font-size: 0.85rem; color: var(--primary-dark); font-weight: 700;">UI Layout Preview (Model Unconfigured)</div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--primary-dark); margin: 0.3rem 0;">
+                6.2 Tons
+            </div>
+            <div style="font-size: 0.85rem; color: var(--primary-dark);">
+                Avg <strong>2.48 Tons / Acre</strong> (Sample Calculation)
+            </div>
+        </div>
+        <div class="alert alert-warning" style="margin-top: 1rem; margin-bottom: 0;">
+            <i class="fa-solid fa-circle-info"></i>
+            <span><strong>Model Status:</strong> AI yield prediction model is not configured yet (<code>models/yield_model.pkl</code>). Model inference will be connected in Phase 7.</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

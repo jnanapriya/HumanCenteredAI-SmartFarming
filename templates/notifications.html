@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications{% endblock %}
+{% block page_title %}Agri Alerts & Notification Center{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-bell"></i>
+    <span><strong>Notification Center:</strong> Displays automated alerts categorized by severity (Low, Medium, High).</span>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title"><i class="fa-solid fa-triangle-exclamation"></i> Active Alerts (3 Unread)</h2>
+        <button class="btn btn-outline" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">Mark All as Read</button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <div class="alert alert-danger" style="margin-bottom: 0;">
+            <div>
+                <strong><i class="fa-solid fa-temperature-arrow-up"></i> High Temperature Warning:</strong> Field B temperature reached 30.1°C with low soil moisture (32%). Consider scheduled irrigation.
+                <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem;">Severity: High &bull; 2 hours ago</div>
+            </div>
+            <button class="btn btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Dismiss</button>
+        </div>
+
+        <div class="alert alert-warning" style="margin-bottom: 0;">
+            <div>
+                <strong><i class="fa-solid fa-vial"></i> Soil Nutrient Advisory:</strong> Field C nitrogen levels are slightly deficient for peak cotton growth. View fertilizer recommendations.
+                <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem;">Severity: Medium &bull; 5 hours ago</div>
+            </div>
+            <button class="btn btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Dismiss</button>
+        </div>
+
+        <div class="alert alert-info" style="margin-bottom: 0;">
+            <div>
+                <strong><i class="fa-solid fa-cloud-sun"></i> Favorable Weather Window:</strong> Forecast indicates 0% rain probability over the next 48 hours. Favorable for fertilizer top-dressing.
+                <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem;">Severity: Low &bull; Yesterday</div>
+            </div>
+            <button class="btn btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Dismiss</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

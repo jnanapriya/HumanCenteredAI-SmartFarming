@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Farmer & Farm Profile{% endblock %}
+{% block page_title %}Farmer & Farm Profile Management{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-user-gear"></i>
+    <span><strong>Farmer & Farm Profile:</strong> Manage farmer contact details, soil settings, language preference, and digital farm profile.</span>
+</div>
+
+<div class="grid-2">
+    <!-- Farmer Profile Card -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-user-check"></i> Farmer Personal Profile</h2>
+            <span class="badge badge-success">Active Session</span>
+        </div>
+        <form action="{{ url_for('profile') }}" method="POST">
+            <input type="hidden" name="form_type" value="farmer">
+            <div class="form-group">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ user.name if user else 'Ramesh Kumar' }}">
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" value="{{ user.email if user else 'ramesh@farm.com' }}">
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" value="{{ user.phone if user else '+91 9876543210' }}">
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="location" class="form-label">Location / District</label>
+                    <input type="text" id="location" name="location" class="form-control" value="{{ user.location if user else 'Coimbatore, Tamil Nadu' }}">
+                </div>
+                <div class="form-group">
+                    <label for="preferred_language" class="form-label">Preferred Language</label>
+                    <select id="preferred_language" name="preferred_language" class="form-control">
+                        <option value="en" selected>English</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Update Farmer Profile
+            </button>
+        </form>
+    </div>
+
+    <!-- Farm Profile Card -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-wheat-field"></i> Farm Profile Settings</h2>
+        </div>
+        <form action="{{ url_for('profile') }}" method="POST">
+            <input type="hidden" name="form_type" value="farm">
+            <div class="form-group">
+                <label for="farm_name" class="form-label">Farm Name</label>
+                <input type="text" id="farm_name" name="farm_name" class="form-control" value="{{ farm.farm_name if farm else 'Green Valley Estate' }}">
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="farm_size" class="form-label">Total Size (Acres)</label>
+                    <input type="number" step="0.1" id="farm_size" name="farm_size" class="form-control" value="{{ farm.total_area if farm else '5.5' }}">
+                </div>
+                <div class="form-group">
+                    <label for="soil_type" class="form-label">Soil Type</label>
+                    <select id="soil_type" name="soil_type" class="form-control">
+                        <option value="Loamy" selected>Loamy Soil</option>
+                        <option value="Clay">Clay Soil</option>
+                        <option value="Black">Black Cotton Soil</option>
+                        <option value="Red">Red Soil</option>
+                        <option value="Sandy">Sandy Soil</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="current_crop" class="form-label">Current Main Crop</label>
+                    <input type="text" id="current_crop" name="current_crop" class="form-control" value="{{ farm.current_crop if farm else 'Rice (Paddy)' }}">
+                </div>
+                <div class="form-group">
+                    <label for="previous_crop" class="form-label">Previous Harvest Crop</label>
+                    <input type="text" id="previous_crop" name="previous_crop" class="form-control" value="{{ farm.previous_crop if farm else 'Pulses' }}">
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="irrigation_type" class="form-label">Irrigation System</label>
+                    <select id="irrigation_type" name="irrigation_type" class="form-control">
+                        <option value="Canal / Borewell" selected>Canal & Borewell</option>
+                        <option value="Drip Irrigation">Drip Irrigation</option>
+                        <option value="Sprinkler">Sprinkler System</option>
+                        <option value="Rainfed">Rainfed Only</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="farming_experience" class="form-label">Farming Experience (Years)</label>
+                    <input type="number" id="farming_experience" name="farming_experience" class="form-control" value="{{ farm.farming_experience if farm else '12' }}">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Save Farm Profile
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

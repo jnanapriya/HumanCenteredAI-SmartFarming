@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Farming{% endblock %} - Human-Centered AI System</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                    <div class="sidebar-brand-text">AgriSmart AI</div>
+                    <div class="sidebar-brand-sub">Human-Centered AI</div>
+                </div>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="menu-category">Overview</li>
+                <li class="sidebar-item {% if active_page == 'dashboard' %}active{% endif %}">
+                    <a href="{{ url_for('dashboard') }}">
+                        <i class="icon fa-solid fa-chart-line"></i> Dashboard
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'profile' %}active{% endif %}">
+                    <a href="{{ url_for('profile') }}">
+                        <i class="icon fa-solid fa-user-gear"></i> Farmer & Farm Profile
+                    </a>
+                </li>
+
+                <li class="menu-category">AI & Advisory Engine</li>
+                <li class="sidebar-item {% if active_page == 'crop_recommendation' %}active{% endif %}">
+                    <a href="{{ url_for('crop_recommendation') }}">
+                        <i class="icon fa-solid fa-seedling"></i> Crop Recommendation
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'soil_analysis' %}active{% endif %}">
+                    <a href="{{ url_for('soil_analysis') }}">
+                        <i class="icon fa-solid fa-vial"></i> Soil Analysis
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'fertilizer' %}active{% endif %}">
+                    <a href="{{ url_for('fertilizer') }}">
+                        <i class="icon fa-solid fa-flask"></i> Fertilizer Advisory
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'irrigation' %}active{% endif %}">
+                    <a href="{{ url_for('irrigation') }}">
+                        <i class="icon fa-solid fa-droplet"></i> Irrigation Advisory
+                    </a>
+                </li>
+
+                <li class="menu-category">Intelligence & Simulation</li>
+                <li class="sidebar-item {% if active_page == 'weather' %}active{% endif %}">
+                    <a href="{{ url_for('weather') }}">
+                        <i class="icon fa-solid fa-cloud-sun-rain"></i> Weather Forecast
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'disease_detection' %}active{% endif %}">
+                    <a href="{{ url_for('disease_detection') }}">
+                        <i class="icon fa-solid fa-virus-slash"></i> Disease Detection
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'digital_twin' %}active{% endif %}">
+                    <a href="{{ url_for('digital_twin') }}">
+                        <i class="icon fa-solid fa-vector-square"></i> Digital Twin
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'simulation' %}active{% endif %}">
+                    <a href="{{ url_for('simulation') }}">
+                        <i class="icon fa-solid fa-sliders"></i> What-If Simulation
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'yield_prediction' %}active{% endif %}">
+                    <a href="{{ url_for('yield_prediction') }}">
+                        <i class="icon fa-solid fa-wheat-awn"></i> Yield Prediction
+                    </a>
+                </li>
+
+                <li class="menu-category">XAI & History</li>
+                <li class="sidebar-item {% if active_page == 'history' %}active{% endif %}">
+                    <a href="{{ url_for('history') }}">
+                        <i class="icon fa-solid fa-clock-rotate-left"></i> Prediction History
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'notifications' %}active{% endif %}">
+                    <a href="{{ url_for('notifications') }}">
+                        <i class="icon fa-solid fa-bell"></i> Notifications
+                    </a>
+                </li>
+                <li class="sidebar-item {% if active_page == 'reports' %}active{% endif %}">
+                    <a href="{{ url_for('reports') }}">
+                        <i class="icon fa-solid fa-file-pdf"></i> Farm Summary Report
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div>B.Tech Academic Project</div>
+                <div style="font-size: 0.7rem; margin-top: 0.2rem; opacity: 0.7;">Human-Centered AI Focus</div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <div class="main-content">
+            <!-- Top Navbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-toggle" id="mobileToggleBtn" aria-label="Toggle Navigation Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h1 class="page-title-heading">{% block page_title %}Dashboard{% endblock %}</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Language Switcher Indicator -->
+                    <div class="lang-switcher" title="Toggle Language (EN/TA)">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>EN / தமிழ்</span>
+                    </div>
+
+                    <!-- User Profile Dropdown / Status -->
+                    {% if session.get('user_id') %}
+                        <div class="user-profile-btn">
+                            <div class="avatar">{{ session.get('user_name', 'F')[0] }}</div>
+                            <div class="user-info">
+                                <span class="user-name">{{ session.get('user_name', 'Farmer') }}</span>
+                                <span class="user-role">Smart Farmer</span>
+                            </div>
+                            <a href="{{ url_for('logout') }}" style="margin-left: 0.75rem; color: var(--text-muted);" title="Logout">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="btn btn-outline" style="padding: 0.4rem 0.9rem; font-size: 0.8rem;">
+                            <i class="fa-solid fa-right-to-bracket"></i> Login
+                        </a>
+                    {% endif %}
+                </div>
+            </header>
+
+            <!-- Alert / Flash Messages Container -->
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category if category != 'error' else 'danger' }}">
+                                <span>{{ message }}</span>
+                                <i class="fa-solid fa-xmark" onclick="this.parentElement.remove()" style="cursor: pointer;"></i>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <!-- Page Specific Content -->
+            <main class="content-body">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

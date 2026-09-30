@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Farm Dashboard{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-circle-info"></i>
+    <span><strong>Phase 1 Layout Preview:</strong> System running in Demo Mode with interactive navigation and sample dashboard analytics.</span>
+</div>
+
+<!-- Overview Stats Cards -->
+<div class="grid-4">
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fa-solid fa-seedling"></i>
+        </div>
+        <div>
+            <div class="stat-val">3 Fields</div>
+            <div class="stat-label">Active Digital Farm</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon" style="background-color: #e0f2fe; color: #0369a1;">
+            <i class="fa-solid fa-vial"></i>
+        </div>
+        <div>
+            <div class="stat-val">6.8 pH</div>
+            <div class="stat-label">Soil Health Status</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon" style="background-color: #fef3c7; color: #b45309;">
+            <i class="fa-solid fa-brain"></i>
+        </div>
+        <div>
+            <div class="stat-val">95%</div>
+            <div class="stat-label">AI Model Confidence</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon" style="background-color: #dcfce7; color: #15803d;">
+            <i class="fa-solid fa-droplet"></i>
+        </div>
+        <div>
+            <div class="stat-val">Optimal</div>
+            <div class="stat-label">Irrigation Status</div>
+        </div>
+    </div>
+</div>
+
+<div class="grid-2" style="margin-top: 1.5rem;">
+    <!-- Active Recommendation Highlight -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title"><i class="fa-solid fa-robot"></i> Latest AI Recommendation</h2>
+                <p class="card-subtitle">Human-Centered Explainable Recommendation</p>
+            </div>
+            <span class="badge badge-success">High Confidence (95%)</span>
+        </div>
+        <div style="padding: 0.5rem 0;">
+            <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 0.5rem;">
+                Recommended Crop: <span style="color: var(--primary-main);">Rice</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                The high rainfall (202.9 mm) and optimal humidity (82%) match historical high-yield rice patterns in your soil area.
+            </p>
+            <div style="display: flex; gap: 0.5rem;">
+                <a href="{{ url_for('crop_recommendation') }}" class="btn btn-primary">
+                    <i class="fa-solid fa-circle-nodes"></i> View Human-Centered AI Explanation
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weather Quick Widget -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title"><i class="fa-solid fa-cloud-sun"></i> Weather Overview</h2>
+                <p class="card-subtitle">Local Forecast (Demo Data)</p>
+            </div>
+            <span class="badge badge-info">Sample Data</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin: 0.75rem 0;">
+            <div>
+                <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main);">28.5°C</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Humidity: 78% &bull; Wind: 12 km/h</div>
+            </div>
+            <div style="font-size: 3rem; color: var(--accent-amber);">
+                <i class="fa-solid fa-sun"></i>
+            </div>
+        </div>
+        <div style="font-size: 0.85rem; background-color: var(--bg-hover); padding: 0.6rem; border-radius: var(--radius-sm); color: var(--text-main);">
+            <i class="fa-solid fa-lightbulb" style="color: var(--accent-amber);"></i> <strong>Farming Advisory:</strong> Favorable weather conditions for scheduled fertilizer application.
+        </div>
+    </div>
+</div>
+
+<!-- Core Modules Shortcut Grid -->
+<div class="card" style="margin-top: 1.5rem;">
+    <div class="card-header">
+        <h2 class="card-title"><i class="fa-solid fa-grid-2"></i> Project Modules Navigation</h2>
+    </div>
+    <div class="grid-3">
+        <a href="{{ url_for('crop_recommendation') }}" class="card" style="margin-bottom: 0; padding: 1.25rem; border-color: var(--primary-soft);">
+            <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary-dark);"><i class="fa-solid fa-seedling"></i> AI Crop Recommendation</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">Feature importance, dual explanations, & farmer feedback.</p>
+        </a>
+
+        <a href="{{ url_for('soil_analysis') }}" class="card" style="margin-bottom: 0; padding: 1.25rem; border-color: var(--primary-soft);">
+            <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary-dark);"><i class="fa-solid fa-vial"></i> Soil Analysis</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">N-P-K nutrient status, pH health, and deficiencies.</p>
+        </a>
+
+        <a href="{{ url_for('fertilizer') }}" class="card" style="margin-bottom: 0; padding: 1.25rem; border-color: var(--primary-soft);">
+            <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary-dark);"><i class="fa-solid fa-flask"></i> Fertilizer Advisory</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">Advisory dosage suggestions based on crop & soil tests.</p>
+        </a>
+
+        <a href="{{ url_for('digital_twin') }}" class="card" style="margin-bottom: 0; padding: 1.25rem; border-color: var(--primary-soft);">
+            <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary-dark);"><i class="fa-solid fa-vector-square"></i> Digital Twin</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">Field card monitoring, crop stages, and moisture states.</p>
+        </a>
+
+        <a href="{{ url_for('simulation') }}" class="card" style="margin-bottom: 0; padding: 1.25rem; border-color: var(--primary-soft);">
+            <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary-dark);"><i class="fa-solid fa-sliders"></i> What-If Simulation</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">Test weather & irrigation scenarios before planting.</p>
+        </a>
+
+        <a href="{{ url_for('reports') }}" class="card" style="margin-bottom: 0; padding: 1.25rem; border-color: var(--primary-soft);">
+            <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary-dark);"><i class="fa-solid fa-file-pdf"></i> Farm Summary Report</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">Printable farm diagnostic and AI recommendation report.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

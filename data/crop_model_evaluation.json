@@ -1,0 +1,119 @@
+{
+  "dataset_rows": 2200,
+  "dataset_cols": 8,
+  "num_classes": 22,
+  "features": [
+    "N",
+    "P",
+    "K",
+    "temperature",
+    "humidity",
+    "ph",
+    "rainfall"
+  ],
+  "models_evaluated": {
+    "Decision Tree": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.9795,
+      "precision": 0.9806,
+      "recall": 0.9795,
+      "f1_score": 0.9794,
+      "overfitting_gap_pct": 2.05
+    },
+    "Random Forest": {
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.9955,
+      "precision": 0.9957,
+      "recall": 0.9955,
+      "f1_score": 0.9955,
+      "overfitting_gap_pct": 0.45
+    },
+    "SVM (Scaled)": {
+      "train_accuracy": 0.9858,
+      "test_accuracy": 0.9841,
+      "precision": 0.9856,
+      "recall": 0.9841,
+      "f1_score": 0.984,
+      "overfitting_gap_pct": 0.17
+    }
+  },
+  "best_model": "Random Forest",
+  "test_accuracy": 0.9955,
+  "sample_predictions": [
+    {
+      "case": 1,
+      "inputs": {
+        "N": 90,
+        "P": 42,
+        "K": 43,
+        "temperature": 20.8,
+        "humidity": 82.0,
+        "ph": 6.5,
+        "rainfall": 202.9
+      },
+      "expected_reference": "rice",
+      "predicted_crop": "rice",
+      "confidence_pct": 90.0
+    },
+    {
+      "case": 2,
+      "inputs": {
+        "N": 118,
+        "P": 45,
+        "K": 20,
+        "temperature": 25.0,
+        "humidity": 60.0,
+        "ph": 6.9,
+        "rainfall": 80.0
+      },
+      "expected_reference": "maize",
+      "predicted_crop": "maize",
+      "confidence_pct": 69.0
+    },
+    {
+      "case": 3,
+      "inputs": {
+        "N": 40,
+        "P": 60,
+        "K": 80,
+        "temperature": 17.0,
+        "humidity": 16.0,
+        "ph": 7.5,
+        "rainfall": 75.0
+      },
+      "expected_reference": "chickpea",
+      "predicted_crop": "chickpea",
+      "confidence_pct": 100.0
+    },
+    {
+      "case": 4,
+      "inputs": {
+        "N": 100,
+        "P": 10,
+        "K": 50,
+        "temperature": 28.0,
+        "humidity": 85.0,
+        "ph": 6.3,
+        "rainfall": 50.0
+      },
+      "expected_reference": "watermelon",
+      "predicted_crop": "watermelon",
+      "confidence_pct": 66.0
+    },
+    {
+      "case": 5,
+      "inputs": {
+        "N": 100,
+        "P": 28,
+        "K": 30,
+        "temperature": 26.5,
+        "humidity": 98.0,
+        "ph": 6.8,
+        "rainfall": 150.0
+      },
+      "expected_reference": "coffee",
+      "predicted_crop": "coconut",
+      "confidence_pct": 26.0
+    }
+  ]
+}

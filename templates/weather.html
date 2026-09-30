@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Weather Forecast{% endblock %}
+{% block page_title %}Agri-Weather Forecast & Alerts{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-cloud-sun"></i>
+    <span><strong>Weather Module:</strong> Currently running in <strong>Demo Data Mode</strong>. Structure prepared for OpenWeatherMap API integration.</span>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title"><i class="fa-solid fa-location-dot"></i> Farm Location: Coimbatore, Tamil Nadu</h2>
+            <p class="card-subtitle">Last updated: Today, 09:30 AM (Sample Feed)</p>
+        </div>
+        <span class="badge badge-warning">Demo Data Mode</span>
+    </div>
+
+    <div class="grid-4" style="margin: 1rem 0;">
+        <div class="stat-card">
+            <div class="stat-icon" style="color: var(--accent-amber);"><i class="fa-solid fa-temperature-high"></i></div>
+            <div>
+                <div class="stat-val">28.5°C</div>
+                <div class="stat-label">Temperature</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="color: var(--accent-blue);"><i class="fa-solid fa-droplet"></i></div>
+            <div>
+                <div class="stat-val">78%</div>
+                <div class="stat-label">Humidity</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="color: #0284c7;"><i class="fa-solid fa-cloud-rain"></i></div>
+            <div>
+                <div class="stat-val">15%</div>
+                <div class="stat-label">Rain Probability</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-wind"></i></div>
+            <div>
+                <div class="stat-val">12 km/h</div>
+                <div class="stat-label">Wind Speed</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 1rem; border-radius: var(--radius-md);">
+        <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.9rem;"><i class="fa-solid fa-user-shield"></i> Farming Advice for Weather:</div>
+        <p style="font-size: 0.85rem; color: var(--text-main); margin-top: 0.25rem;">
+            Low rain probability today. Ideal window for field inspection and weeding operations.
+        </p>
+    </div>
+</div>
+{% endblock %}

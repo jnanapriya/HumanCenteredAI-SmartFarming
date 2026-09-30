@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Digital Twin{% endblock %}
+{% block page_title %}Digital Farm & Field Monitoring{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-vector-square"></i>
+    <span><strong>Digital Twin Concept:</strong> Field cards showing crop stage, moisture, and temperature. Currently using <strong>Manual / Demo Data</strong> (No IoT sensors attached).</span>
+</div>
+
+<div class="card-header" style="margin-bottom: 1.5rem; background: var(--bg-card); padding: 1rem 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-light);">
+    <div>
+        <h2 class="card-title"><i class="fa-solid fa-layer-group"></i> Active Farm Fields (3 Fields)</h2>
+        <p class="card-subtitle">Location: Sector 4A, Green Farm Estate</p>
+    </div>
+    <button class="btn btn-primary" onclick="alert('Field creation modal ready for Phase 2 DB hook!')">
+        <i class="fa-solid fa-plus"></i> Add New Field
+    </button>
+</div>
+
+<div class="grid-3">
+    <!-- Field Card 1 -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title" style="font-size: 1rem;"><i class="fa-solid fa-border-all" style="color: var(--primary-main);"></i> Field A - Paddy Block</h3>
+            <span class="badge badge-success">Healthy</span>
+        </div>
+        <div style="font-size: 0.85rem; line-height: 1.8; color: var(--text-main);">
+            <div><strong>Crop:</strong> Paddy (Rice)</div>
+            <div><strong>Area:</strong> 2.5 Acres</div>
+            <div><strong>Soil Moisture:</strong> 45% (Optimal)</div>
+            <div><strong>Temperature:</strong> 28.5°C</div>
+            <div><strong>Humidity:</strong> 78%</div>
+            <div><strong>Growth Stage:</strong> Vegetative (Day 35)</div>
+            <div><strong>Irrigation Status:</strong> Satisfactory</div>
+        </div>
+        <div style="margin-top: 1rem; text-align: right;">
+            <button class="btn btn-outline" style="padding: 0.3rem 0.65rem; font-size: 0.775rem;">Manage Field</button>
+        </div>
+    </div>
+
+    <!-- Field Card 2 -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title" style="font-size: 1rem;"><i class="fa-solid fa-border-all" style="color: var(--accent-amber);"></i> Field B - Maize Block</h3>
+            <span class="badge badge-warning">Moderate</span>
+        </div>
+        <div style="font-size: 0.85rem; line-height: 1.8; color: var(--text-main);">
+            <div><strong>Crop:</strong> Maize</div>
+            <div><strong>Area:</strong> 1.8 Acres</div>
+            <div><strong>Soil Moisture:</strong> 32% (Low)</div>
+            <div><strong>Temperature:</strong> 30.1°C</div>
+            <div><strong>Humidity:</strong> 65%</div>
+            <div><strong>Growth Stage:</strong> Flowering</div>
+            <div><strong>Irrigation Status:</strong> Needs Water</div>
+        </div>
+        <div style="margin-top: 1rem; text-align: right;">
+            <button class="btn btn-outline" style="padding: 0.3rem 0.65rem; font-size: 0.775rem;">Manage Field</button>
+        </div>
+    </div>
+
+    <!-- Field Card 3 -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title" style="font-size: 1rem;"><i class="fa-solid fa-border-all" style="color: var(--primary-dark);"></i> Field C - Cotton Plot</h3>
+            <span class="badge badge-success">Healthy</span>
+        </div>
+        <div style="font-size: 0.85rem; line-height: 1.8; color: var(--text-main);">
+            <div><strong>Crop:</strong> Cotton</div>
+            <div><strong>Area:</strong> 1.2 Acres</div>
+            <div><strong>Soil Moisture:</strong> 40%</div>
+            <div><strong>Temperature:</strong> 29.0°C</div>
+            <div><strong>Humidity:</strong> 70%</div>
+            <div><strong>Growth Stage:</strong> Seedling</div>
+            <div><strong>Irrigation Status:</strong> Optimal</div>
+        </div>
+        <div style="margin-top: 1rem; text-align: right;">
+            <button class="btn btn-outline" style="padding: 0.3rem 0.65rem; font-size: 0.775rem;">Manage Field</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

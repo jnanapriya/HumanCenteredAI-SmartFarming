@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction History{% endblock %}
+{% block page_title %}Prediction History & Farmer Feedback Log{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-clock-rotate-left"></i>
+    <span><strong>Prediction History Log:</strong> Archive of previous AI queries, input parameter states, confidence ratings, and recorded farmer feedback.</span>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title"><i class="fa-solid fa-list-check"></i> Prediction History</h2>
+        <span class="badge badge-warning">Phase 1 Database State</span>
+    </div>
+
+    <div class="alert alert-warning" style="margin: 1rem;">
+        <i class="fa-solid fa-database"></i>
+        <span><strong>Database Status:</strong> MySQL database connection is not configured yet. History persistence will be connected in Phase 2. Below is the UI layout table structure.</span>
+    </div>
+
+    <div class="table-responsive" style="padding: 0 1rem 1rem;">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Prediction Type</th>
+                    <th>Recommended Crop</th>
+                    <th>Confidence</th>
+                    <th>Reliability</th>
+                    <th>Farmer Feedback</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>-</td>
+                    <td>Crop Recommendation (UI Preview)</td>
+                    <td><strong>Rice</strong></td>
+                    <td>95.5%</td>
+                    <td><span class="badge badge-success">High</span></td>
+                    <td><span class="badge badge-success"><i class="fa-solid fa-thumbs-up"></i> Helpful</span></td>
+                    <td><a href="{{ url_for('crop_recommendation') }}" class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">View XAI</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

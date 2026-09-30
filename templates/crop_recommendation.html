@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}AI Crop Recommendation{% endblock %}
+{% block page_title %}AI Crop Recommendation & Human Explanation{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-brain"></i>
+    <span><strong>Human-Centered AI Core Module:</strong> Demonstrates crop recommendation layout, confidence rating, feature importance explanation, and farmer feedback mechanism.</span>
+</div>
+
+{% if not model_configured %}
+<div class="alert alert-warning" style="margin-bottom: 1.5rem;">
+    <i class="fa-solid fa-circle-info"></i>
+    <span><strong>AI Model Status:</strong> AI crop recommendation model is not configured yet (<code>models/crop_model.pkl</code>). The ML model will be connected in Phase 3. Submitting parameters below displays the Human-Centered XAI UI layout preview.</span>
+</div>
+{% endif %}
+
+<div class="grid-2">
+    <!-- Input Form Card -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title"><i class="fa-solid fa-sliders"></i> Soil & Weather Parameters</h2>
+                <p class="card-subtitle">Enter field parameters or click Sample Data</p>
+            </div>
+            <button type="button" class="btn btn-outline" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;" onclick="fillSampleData('crop')">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Fill Sample Data
+            </button>
+        </div>
+
+        <form action="{{ url_for('crop_recommendation') }}" method="POST">
+            <div class="grid-3">
+                <div class="form-group">
+                    <label for="nitrogen" class="form-label">Nitrogen (N)</label>
+                    <input type="number" id="nitrogen" name="nitrogen" class="form-control" placeholder="90" required value="{{ input_data.nitrogen if input_data else 90 }}">
+                    <div class="form-hint">mg/kg</div>
+                </div>
+                <div class="form-group">
+                    <label for="phosphorus" class="form-label">Phosphorus (P)</label>
+                    <input type="number" id="phosphorus" name="phosphorus" class="form-control" placeholder="42" required value="{{ input_data.phosphorus if input_data else 42 }}">
+                    <div class="form-hint">mg/kg</div>
+                </div>
+                <div class="form-group">
+                    <label for="potassium" class="form-label">Potassium (K)</label>
+                    <input type="number" id="potassium" name="potassium" class="form-control" placeholder="43" required value="{{ input_data.potassium if input_data else 43 }}">
+                    <div class="form-hint">mg/kg</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="temperature" class="form-label">Temperature (°C)</label>
+                    <input type="number" step="0.1" id="temperature" name="temperature" class="form-control" placeholder="20.8" required value="{{ input_data.temperature if input_data else 20.8 }}">
+                </div>
+                <div class="form-group">
+                    <label for="humidity" class="form-label">Humidity (%)</label>
+                    <input type="number" step="0.1" id="humidity" name="humidity" class="form-control" placeholder="82.0" required value="{{ input_data.humidity if input_data else 82.0 }}">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="ph" class="form-label">Soil pH (0 - 14)</label>
+                    <input type="number" step="0.1" id="ph" name="ph" class="form-control" placeholder="6.5" required value="{{ input_data.ph if input_data else 6.5 }}">
+                </div>
+                <div class="form-group">
+                    <label for="rainfall" class="form-label">Rainfall (mm)</label>
+                    <input type="number" step="0.1" id="rainfall" name="rainfall" class="form-control" placeholder="202.9" required value="{{ input_data.rainfall if input_data else 202.9 }}">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                <i class="fa-solid fa-microchip"></i> Generate AI Recommendation
+            </button>
+        </form>
+    </div>
+
+    <!-- AI Output & Reliability Panel -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title"><i class="fa-solid fa-square-poll-vertical"></i> AI Recommendation Result</h2>
+                <p class="card-subtitle">Trained ML Model Inference & Reliability</p>
+            </div>
+            {% if prediction %}
+                <span class="badge badge-{{ 'success' if prediction.confidence_level == 'High' else ('warning' if prediction.confidence_level == 'Medium' else 'danger') }}">
+                    {{ prediction.confidence_level }} Confidence ({{ prediction.confidence if prediction.confidence is not none else 'N/A' }}%)
+                </span>
+            {% endif %}
+        </div>
+
+        {% if prediction %}
+            <div style="background-color: var(--primary-soft); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--primary-light); margin-bottom: 1.25rem;">
+                <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: var(--primary-dark);">Recommended Crop</div>
+                <div style="font-size: 2.2rem; font-weight: 800; color: var(--primary-dark); margin: 0.2rem 0;">
+                    <i class="fa-solid fa-wheat-awn" style="color: var(--primary-main);"></i> {{ prediction.crop }}
+                </div>
+                <div style="font-size: 0.85rem; color: var(--primary-dark);">
+                    Model Confidence: <strong>{{ prediction.confidence if prediction.confidence is not none else 'N/A' }}%</strong> &bull; Model Test Accuracy: <strong>99.55%</strong>
+                </div>
+            </div>
+
+            <!-- Alternative Recommendations -->
+            {% if prediction.has_proba and prediction.alternatives %}
+            <div>
+                <h3 style="font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+                    Top Alternative Suitable Crops:
+                </h3>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    {% for alt in prediction.alternatives %}
+                        <span style="background-color: var(--bg-hover); border: 1px solid var(--border-medium); padding: 0.4rem 0.85rem; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 600;">
+                            <i class="fa-solid fa-seedling" style="color: var(--primary-medium);"></i> {{ alt.crop }} ({{ alt.probability }}%)
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
+                <em>Probability distribution calculation unavailable for this classifier.</em>
+            </div>
+            {% endif %}
+
+            <!-- Reliability Warning if Confidence is Low -->
+            {% if prediction.confidence_level == 'Low' %}
+                <div class="alert alert-warning" style="margin-top: 1rem; margin-bottom: 0;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span><strong>Low model confidence.</strong> Consider checking the soil and weather information before making a farming decision.</span>
+                </div>
+            {% endif %}
+        {% else %}
+            <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+                <i class="fa-solid fa-robot" style="font-size: 3rem; color: var(--border-medium); margin-bottom: 1rem;"></i>
+                <p>Submit soil and weather parameters on the left to generate real-time AI crop recommendations.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- HUMAN-CENTERED AI EXPLANATION SECTION -->
+{% if prediction %}
+<div class="xai-container">
+    <div class="xai-header">
+        <div>
+            <div class="xai-title">
+                <i class="fa-solid fa-lightbulb" style="color: var(--accent-amber);"></i>
+                Why Was This Crop Recommended?
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Human-Centered Explainable AI (XAI) Factor Breakdown</p>
+        </div>
+
+        <div style="font-size: 0.85rem; background-color: #ffffff; padding: 0.3rem 0.75rem; border-radius: var(--radius-full); border: 1px solid #bbf7d0; font-weight: 600;">
+            <i class="fa-solid fa-shield-halved" style="color: var(--primary-main);"></i> Transparent AI
+        </div>
+    </div>
+
+    <!-- Explanation Mode Switcher -->
+    <div class="tab-group">
+        <div class="tab-item active" data-tab-target="simpleExplanation">
+            <i class="fa-solid fa-user-check"></i> Simple Farmer Explanation
+        </div>
+        <div class="tab-item" data-tab-target="technicalExplanation">
+            <i class="fa-solid fa-code"></i> Technical ML Explanation
+        </div>
+    </div>
+
+    <div id="tabContentContainer">
+        <!-- Simple Mode Panel -->
+        <div id="simpleExplanation" class="tab-content-panel" style="display: block;">
+            <div style="background-color: #ffffff; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); font-size: 0.95rem; line-height: 1.6; color: var(--text-main);">
+                <i class="fa-solid fa-quote-left" style="color: var(--primary-light); font-size: 1.2rem; margin-right: 0.4rem;"></i>
+                {{ prediction.simple_explanation }}
+            </div>
+        </div>
+
+        <!-- Technical Mode Panel -->
+        <div id="technicalExplanation" class="tab-content-panel" style="display: none;">
+            <div style="background-color: #1e293b; color: #f8fafc; padding: 1.25rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.85rem; line-height: 1.6;">
+                <div style="color: #38bdf8; margin-bottom: 0.4rem;">// Machine Learning Feature Decision Breakdown</div>
+                <div>{{ prediction.technical_explanation }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Influence Bars -->
+    <div style="margin-top: 1.5rem;">
+        <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 1rem;">
+            Key Input Factor Influences on Decision:
+        </h4>
+
+        {% for feature, influence in prediction.feature_influences.items() %}
+            <div class="feature-bar-group">
+                <div class="feature-info">
+                    <span>{{ feature }}</span>
+                    <span style="color: var(--primary-main);">{{ influence.level }} Influence ({{ influence.score }}%)</span>
+                </div>
+                <div class="feature-progress-bg">
+                    <div class="feature-progress-fill" style="width: {{ influence.score }}%;"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- FARMER FEEDBACK LOOP -->
+<div class="card" style="margin-top: 1.5rem;">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title"><i class="fa-solid fa-comments"></i> Farmer Feedback Loop</h2>
+            <p class="card-subtitle">Human-Centered AI Interaction & Decision Validation</p>
+        </div>
+    </div>
+    <form action="{{ url_for('feedback') }}" method="POST">
+        <input type="hidden" name="prediction_id" value="{{ prediction.id if prediction else 1 }}">
+        
+        <p style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem;">
+            Was this recommendation understandable and helpful for your field?
+        </p>
+
+        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem; font-weight: 600;">
+                <input type="radio" name="usefulness" value="Yes" checked> <span style="color: var(--primary-main);"><i class="fa-solid fa-thumbs-up"></i> Yes, Very Helpful</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem; font-weight: 600;">
+                <input type="radio" name="usefulness" value="Partially"> <span style="color: var(--accent-amber);"><i class="fa-solid fa-hand"></i> Partially</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem; font-weight: 600;">
+                <input type="radio" name="usefulness" value="No"> <span style="color: var(--accent-red);"><i class="fa-solid fa-thumbs-down"></i> No</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="comments" class="form-label">Optional Comments / Field Observations</label>
+            <textarea id="comments" name="comments" class="form-control" rows="2" placeholder="e.g., Rice is indeed grown in our neighboring field during this season."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">
+            <i class="fa-solid fa-paper-plane"></i> Submit Farmer Feedback
+        </button>
+        <span class="form-hint" style="margin-left: 0.75rem;">Your feedback helps evaluate AI performance in practical farming.</span>
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

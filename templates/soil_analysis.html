@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Soil Analysis{% endblock %}
+{% block page_title %}Soil Health & Nutrient Analysis{% endblock %}
+
+{% block content %}
+<div class="demo-banner">
+    <i class="fa-solid fa-vial"></i>
+    <span><strong>Soil Analysis Module:</strong> Evaluates N-P-K levels, pH balance, and moisture health status with advisory indicators.</span>
+</div>
+
+<div class="grid-2">
+    <!-- Soil Input Form -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-flask"></i> Test Soil Parameters</h2>
+            <button type="button" class="btn btn-outline" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;" onclick="fillSampleData('soil')">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Sample Data
+            </button>
+        </div>
+        <form action="{{ url_for('soil_analysis') }}" method="POST">
+            <div class="grid-3">
+                <div class="form-group">
+                    <label for="nitrogen" class="form-label">Nitrogen (N)</label>
+                    <input type="number" id="nitrogen" name="nitrogen" class="form-control" placeholder="85" value="85" required>
+                </div>
+                <div class="form-group">
+                    <label for="phosphorus" class="form-label">Phosphorus (P)</label>
+                    <input type="number" id="phosphorus" name="phosphorus" class="form-control" placeholder="38" value="38" required>
+                </div>
+                <div class="form-group">
+                    <label for="potassium" class="form-label">Potassium (K)</label>
+                    <input type="number" id="potassium" name="potassium" class="form-control" placeholder="40" value="40" required>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="ph" class="form-label">Soil pH Level</label>
+                    <input type="number" step="0.1" id="ph" name="ph" class="form-control" placeholder="6.8" value="6.8" required>
+                </div>
+                <div class="form-group">
+                    <label for="moisture" class="form-label">Moisture (%)</label>
+                    <input type="number" step="0.1" id="moisture" name="moisture" class="form-control" placeholder="45" value="45" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fa-solid fa-magnifying-glass-chart"></i> Analyze Soil Health
+            </button>
+        </form>
+    </div>
+
+    <!-- Soil Status Result Card -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-heart-pulse"></i> Soil Health Summary</h2>
+            <span class="badge badge-success">Slightly Acidic (Optimal)</span>
+        </div>
+        
+        <div class="grid-2" style="margin-bottom: 1rem;">
+            <div style="background-color: var(--bg-hover); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Primary Nutrient Balance</div>
+                <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary-dark);">High Nitrogen &bull; Medium P & K</div>
+            </div>
+            <div style="background-color: var(--bg-hover); padding: 1rem; border-radius: var(--radius-md);">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">pH Status</div>
+                <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary-dark);">6.8 (Optimal Range 6.0-7.5)</div>
+            </div>
+        </div>
+
+        <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 1rem; border-radius: var(--radius-md);">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.9rem;"><i class="fa-solid fa-lightbulb"></i> Agronomic Advisory:</div>
+            <p style="font-size: 0.85rem; color: var(--text-main); margin-top: 0.3rem;">
+                Soil parameters are well suited for cereal and grain crops. No severe acidity or nutrient deficiencies detected.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
